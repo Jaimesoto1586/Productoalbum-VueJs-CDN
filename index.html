@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CDN BOOTSTRAP -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Nuevo Vuejs.CDN</title>
+</head>
+<body>
+
+    <!-- Barra Inicio (https://getbootstrap.com/docs/4.5/utilities/colors/#background-gradient) de Bootstrap -->
+    <div class="p-3 mb-2 bg-primary text-white">
+        <h1 class="display-4">Álbumes</h1>
+    </div>
+    <!-- Fin de la Barra de Inicio NO ES UN NAV, ES UN BACKGROUND COLOR  -->
+
+    <!-- ENCERRE TODA LA PAGINA EN ESTE CONTENEDOR. DEBO PROBAR SI SE PUEDE PONER EL DIV CONTAINER DENTRO DEL DIV APP -->
+    <div class="container">
+        <div id="app">
+            <div class="row pt-5">
+                <div class="col">
+                    <!-- la foto no la pude ligar a la carpeta assets donde esta la carpeta de las imagenes por eso esta en el directorio principal -->
+                    <img v-bind:src="img"/>
+                </div>
+                <!-- DENTRO DEL ROW VAMOS A PONER TODO EL CONTENIDO CON UN DIV COL. EL NOMBRE DEL PRODUCTO DESCRIPCION LOS STOCKS LOS DETALLES EL MOUSEOVER QUE ES PARA CAMBIAR LA IMAGEN CARRITO Y BOTONES -->
+                <div class="col">
+                    <h1 class="text-info display-1">{{producto}}</h1>
+                    <h2 class="text-danger">{{descripcion}}</h2>
+                    <!-- STOCK - QUEDAN MUY POCAS - SIN STOCK -->
+                    <!-- SI STOCK (12) ES MAYOR O IGUAL A 6 MUESTRA PARRAFO1 -->
+                    <button class="btn btn-success"v-if='stock > 6'>{{parrafo1}}</button>
+                    <!-- SIn STOCK (12) ES MENOR O IGUAL A 6 ENTONCES SI 12 ES MAYOR A 0 MUESTRA PARRAFO2 -->
+                    <button class="btn btn-warning" v-else-if='stock <= 6 && stock > 0'>{{parrafo2}}</button>
+                    <!-- SOLO SE PONE ELSE -->
+                    <button class="btn btn-danger" v-else=>{{parrafo3}}</button>
+                    <!-- AHORA REALIZAMOS UNA LISTA CON LOS DETALLES DEL PRODUCTO -->
+                    <ul>
+                        <li v-for="(detalle, index) in detalles" :key="index">{{detalle}}</li>
+                    </ul>
+                    <!-- CREAMOS UN DIV PARA CONTENER LAS VARIANTES QUE SON PARA EL CAMBIO DE IMAGEN AL PASAR EL MOUSE POR SU RESPECTIVA VARIANTE LAS CUALES SON PORTADA E INTERIOR PARA ESTO REALIZAMOS UN OBJETO EL CUAL REALIZARA UN V-FOR (CICLO FOR) -->
+                    <div v-for="variante in variantes" :key="variante.id">
+                        <a v-on:mouseover="actualizarImg(variante.img)">{{variante.tipo}}</a>
+                    </div>
+                    <!-- AHORA PONDREMOS UNA WEB QUE CREAMOS AQUI MISMO PERO NO LA PONDRE POR EFECTOS DE LA PAGINA PORK NO VA -->
+                    <!-- <a :href="link">Pagina Nueva</a> -->
+                    <!-- VAMOS A PONER CARRO Y ESTE AUMENTARA O DISMINUIRA LA CANTIDAD DE UNIDADES QUE LA PERSONA LLEVE POR ENDE LLEVA UNA VARIABLE ENTERA-->
+                    <p>{{carro}}</p>
+                    <!-- TERMINAMOS CON EL DATA O DATOS DEL MAIN.JS -->
+
+                    <!-- VAMOS A CREAR LOS BOTONES DEL CARRITO QUE SON AGREGAR AL CARRO O SACAR DEL CARRO. PARA ESTO VAMOS A UTILIZAR EL METHOD EN EL MAIN.JS -->
+                    <button class="btn btn-info" @click="agregaraCarro" :disabled="!inStock">{{boton1}}</button>
+                    <button class="btn btn-warning" @click="sacardeCarro">{{boton2}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+<!-- Vue.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- SCRIPT MAIN.JS -->
+<script src="main.js"></script>
+</body>
+</html>
